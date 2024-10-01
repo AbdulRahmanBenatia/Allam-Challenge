@@ -7,6 +7,8 @@ from kivy.uix.label import Label
 from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.uix.textinput import TextInput
 from kivy.uix.dropdown import DropDown
+from ibm_API import get_reponse
+
 BUHOOR = [ #These are only 14
     "السريع",
     "الكامل",
@@ -100,8 +102,8 @@ class Page1(Screen):
         layout = BoxLayout(orientation='vertical', padding=10, spacing=10)
 
         # Title label
-        label = Label(text=reshape_text("أدخل البيت المراد معرفة بحره"), font_size='24sp', halign='center', valign='middle', font_name="Amiri-Regular.ttf")
-        layout.add_widget(label)
+        self.label = Label(text=reshape_text("أدخل البيت المراد معرفة بحره"), font_size='24sp', halign='center', valign='middle', font_name="Amiri-Regular.ttf")
+        layout.add_widget(self.label)
 
         # Create a TextInput for Arabic text
         self.text_input = ArabicTextInput(hint_text=reshape_text('أدخل البيت هنا'), font_size='24sp', size_hint=(1, 0.2), font_name="Amiri-Regular.ttf")
@@ -117,7 +119,7 @@ class Page1(Screen):
 
         # Submit button
         submit_button = Button(text=reshape_text("تأكيد"), size_hint=(1, 0.2), font_name="Amiri-Regular.ttf")
-        # submit_button.bind(on_press=self.on_submit)
+        submit_button.bind(on_press=self.on_submit)
         layout.add_widget(submit_button)
         
         # Back button
@@ -154,7 +156,19 @@ class Page1(Screen):
         
         instance.bind(text=self.update_output)
         self.full_verse = value
-
+        
+    def on_submit(self, interface):
+        print(self.full_verse)
+        prompt = f"""
+        ما بحر هذا البيت؟ 
+        {self.full_verse}
+        فقط البحر.
+        """
+        print("PRESSED")
+        response = get_reponse(prompt=prompt)
+        print(response)
+        self.label.text = reshape_text(response)
+        
 
 class Page2(Screen):
     def __init__(self, **kwargs):
@@ -195,8 +209,8 @@ class Page3(Screen):
         layout = BoxLayout(orientation='vertical', padding=10, spacing=10)
 
         # Title label
-        label = Label(text=reshape_text("أدخل البيت المراد شرحه"), font_size='24sp', halign='center', valign='middle', font_name="Amiri-Regular.ttf")
-        layout.add_widget(label)
+        self.label = Label(text=reshape_text("أدخل البيت المراد شرحه"), font_size='24sp', halign='center', valign='middle', font_name="Amiri-Regular.ttf")
+        layout.add_widget(self.label)
 
         # Create a TextInput for Arabic text
         self.text_input = ArabicTextInput(hint_text=reshape_text('أدخل البيت هنا'), font_size='24sp', size_hint=(1, 0.2), font_name="Amiri-Regular.ttf")
@@ -212,7 +226,7 @@ class Page3(Screen):
 
         # Submit button
         submit_button = Button(text=reshape_text("تأكيد"), size_hint=(1, 0.2), font_name="Amiri-Regular.ttf")
-        # submit_button.bind(on_press=self.on_submit)
+        submit_button.bind(on_press=self.on_submit)
         layout.add_widget(submit_button)
         
         # Back button
@@ -249,6 +263,50 @@ class Page3(Screen):
         
         instance.bind(text=self.update_output)
         self.full_verse = value
+        
+    def on_submit(self, interface):
+        print(self.full_verse)
+        prompt = f"""
+        اشرح هذا البيت شرحا موجزا جدا: 
+        {self.full_verse}
+        """
+        print("PRESSED")
+        response = get_reponse(prompt=prompt)
+        print(response)
+        self.label.text = reshape_text(response)
+        
+# class Page4(Screen):
+#     def __init__(self, **kwargs):
+#         super(Page4, self).__init__(**kwargs)
+#         layout = BoxLayout(orientation='vertical', padding=10, spacing=10)
+
+#         dropdown = DropDown()
+
+#         # Arabic options for the dropdown
+#         options = BUHOOR
+#         # Add options to dropdown
+#         for option in options:
+#             btn = Button(text=reshape_text(option), size_hint_y=None, height=44,font_name="Amiri-Regular.ttf")
+#             btn.bind(on_release=lambda btn: self.select_option(btn.text, dropdown))
+#             dropdown.add_widget(btn)
+
+#         main_button = Button(text=reshape_text('اختر بحرا'), size_hint=(1, 0.1), font_name="Amiri-Regular.ttf")
+#         main_button.bind(on_release=dropdown.open)
+#         layout.add_widget(main_button)
+#         layout.add_widget(dropdown)
+
+#         back_button = Button(text=reshape_text('رجوع'), size_hint=(1, 0.2), font_name="Amiri-Regular.ttf")
+#         back_button.bind(on_press=lambda x: setattr(self.manager, 'current', 'main'))
+#         layout.add_widget(back_button)
+
+#         self.add_widget(layout)
+
+#     def select_option(self, option, dropdown):
+#         # Update main button text to show selected option
+#         dropdown.parent.children[1].text = reshape_text(option)
+#         dropdown.dismiss()
+
+import json
 
 class Page4(Screen):
     def __init__(self, **kwargs):
@@ -257,18 +315,25 @@ class Page4(Screen):
 
         dropdown = DropDown()
 
+        # Load the responses from the JSON file
+        with open('buhur_responses_reshaped.json', 'r', encoding='utf-8') as json_file:
+            self.buhur_responses = json.load(json_file)
+
         # Arabic options for the dropdown
         options = BUHOOR
         # Add options to dropdown
         for option in options:
-            btn = Button(text=reshape_text(option), size_hint_y=None, height=44,font_name="Amiri-Regular.ttf")
+            btn = Button(text=reshape_text(option), size_hint_y=None, height=44, font_name="Amiri-Regular.ttf")
             btn.bind(on_release=lambda btn: self.select_option(btn.text, dropdown))
             dropdown.add_widget(btn)
 
-        main_button = Button(text=reshape_text('اختر بحرا'), size_hint=(1, 0.1), font_name="Amiri-Regular.ttf")
-        main_button.bind(on_release=dropdown.open)
-        layout.add_widget(main_button)
+        self.main_button = Button(text=reshape_text('اختر بحرا'), size_hint=(1, 0.1), font_name="Amiri-Regular.ttf")
+        self.main_button.bind(on_release=dropdown.open)
+        layout.add_widget(self.main_button)
         layout.add_widget(dropdown)
+
+        self.response_label = Label(text="", size_hint=(1, 0.6), font_name="Amiri-Regular.ttf")
+        layout.add_widget(self.response_label)
 
         back_button = Button(text=reshape_text('رجوع'), size_hint=(1, 0.2), font_name="Amiri-Regular.ttf")
         back_button.bind(on_press=lambda x: setattr(self.manager, 'current', 'main'))
@@ -278,8 +343,23 @@ class Page4(Screen):
 
     def select_option(self, option, dropdown):
         # Update main button text to show selected option
-        dropdown.parent.children[1].text = reshape_text(option)
+        self.main_button.text = option
         dropdown.dismiss()
+
+        # Fetch the corresponding response from the loaded JSON file
+        option_key = option.strip()  # Strip any extra spaces or formatting if needed
+        print(len(reshape_text(option_key)))
+        print(len(list(self.buhur_responses.keys())[0]))
+        print(option_key)
+        print(list(self.buhur_responses.keys())[0])
+        if option_key in self.buhur_responses:
+            response = self.buhur_responses[option_key]
+        else:
+            response = "No explanation available."
+
+        # Update the label with the response
+        self.response_label.text = reshape_text(response)
+
 
 class ArabicApp(App):
     def build(self):
