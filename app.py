@@ -3,15 +3,15 @@ from kivy.uix.button import Button
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.label import Label
 from kivy.uix.screenmanager import ScreenManager, Screen
-from kivy.uix.dropdown import DropDown
+from kivy.clock import Clock
+from kivy.core.window import Window
 from utils import reshape_text
 from pages.page1 import Page1
 from pages.page2 import Page2
 from pages.page3 import Page3
 from pages.page4 import Page4
 
-
-BUHOOR = [ #These are only 14
+BUHOOR = [ 
     "السريع",
     "الكامل",
     "المتقارب",
@@ -26,44 +26,65 @@ BUHOOR = [ #These are only 14
     "الوافر",
     "الهزج",
     "الرجز",
-    
-    # Adding the rest 2 meters, Note: Not in Metrec Dataset
     "المقتضب",
     "الخبب",
 ]
 
-
-
 class MainPage(Screen):
     def __init__(self, **kwargs):
         super(MainPage, self).__init__(**kwargs)
-        layout = BoxLayout(orientation='vertical', padding=20, spacing=15)
-
+        self.layout = BoxLayout(orientation='vertical', padding=20, spacing=15)
         font_path = "Amiri-Regular.ttf"  
 
-        title_label = Label(text=reshape_text('علَّام الشعر'), font_size='32sp', size_hint=(1, 0.2),
-                            halign='center', valign='middle', font_name=font_path)
-        title_label.bind(size=title_label.setter('text_size'))
+        # Title Label
+        self.title_label = Label(text='', font_size='32sp', size_hint=(1, 0.2),
+                                 halign='center', valign='middle', font_name=font_path)
+        self.title_label.bind(size=self.title_label.setter('text_size'))
+        self.layout.add_widget(self.title_label)
 
-        button1 = Button(text=reshape_text("تحديد البحر الشعري"), font_size='24sp', size_hint=(1, 0.2), font_name=font_path)
-        button1.bind(on_press=self.go_to_page1)
+        # Define buttons with reshaped text and initially set opacity to 0
+        self.buttons = [
+            Button(text=reshape_text("تحديد البحر الشعري"), font_size='24sp', size_hint=(1, 0.2), font_name=font_path, opacity=0),
+            Button(text=reshape_text("إنشاء أبيات جديدة"), font_size='24sp', size_hint=(1, 0.2), font_name=font_path, opacity=0),
+            Button(text=reshape_text("شرح الأبيات"), font_size='24sp', size_hint=(1, 0.2), font_name=font_path, opacity=0),
+            Button(text=reshape_text("دراسة البحور"), font_size='24sp', size_hint=(1, 0.2), font_name=font_path, opacity=0),
+        ]
+        
+        # Bind each button to its corresponding function
+        self.buttons[0].bind(on_press=self.go_to_page1)
+        self.buttons[1].bind(on_press=self.go_to_page2)
+        self.buttons[2].bind(on_press=self.go_to_page3)
+        self.buttons[3].bind(on_press=self.go_to_page4)
 
-        button2 = Button(text=reshape_text("إنشاء أبيات جديدة"), font_size='24sp', size_hint=(1, 0.2), font_name=font_path)
-        button2.bind(on_press=self.go_to_page2)
+        # Add all buttons to the layout at once in their places
+        for button in self.buttons:
+            self.layout.add_widget(button)
 
-        button3 = Button(text=reshape_text("شرح الأبيات"), font_size='24sp', size_hint=(1, 0.2), font_name=font_path)
-        button3.bind(on_press=self.go_to_page3)
+        # Add the layout to the screen
+        self.add_widget(self.layout)
 
-        button4 = Button(text=reshape_text("دراسة البحور"), font_size='24sp', size_hint=(1, 0.2), font_name=font_path)
-        button4.bind(on_press=self.go_to_page4)
+        # Animate the title and then the buttons
+        self.animate_text(reshape_text("الفرهيدي"))  # Start the text animation
+        Clock.schedule_once(self.animate_buttons, 1)  # Delay the button animation slightly
 
-        layout.add_widget(title_label)
-        layout.add_widget(button1)
-        layout.add_widget(button2)
-        layout.add_widget(button3)
-        layout.add_widget(button4)
+    def animate_text(self, full_text):
+        self.title_label.text = ''  # Start with an empty label
+        self.index = 0
 
-        self.add_widget(layout)
+        def update_text(dt):
+            if self.index < len(full_text):
+                self.title_label.text += full_text[self.index]
+                self.index += 1
+            else:
+                return False  # Stop the scheduled event once text is complete
+
+        # Schedule the text update every 0.1 seconds
+        Clock.schedule_interval(update_text, 0.1)
+
+    def animate_buttons(self, *args):
+        # Gradually increase the opacity of each button
+        for i, button in enumerate(self.buttons):
+            Clock.schedule_once(lambda dt, btn=button: setattr(btn, 'opacity', 1), i * 0.5)
 
     def go_to_page1(self, instance):
         self.manager.current = 'page1'
@@ -78,47 +99,11 @@ class MainPage(Screen):
         self.manager.current = 'page4'
 
 
-
-
-        
-# class Page4(Screen):
-#     def __init__(self, **kwargs):
-#         super(Page4, self).__init__(**kwargs)
-#         layout = BoxLayout(orientation='vertical', padding=10, spacing=10)
-
-#         dropdown = DropDown()
-
-#         # Arabic options for the dropdown
-#         options = BUHOOR
-#         # Add options to dropdown
-#         for option in options:
-#             btn = Button(text=reshape_text(option), size_hint_y=None, height=44,font_name="Amiri-Regular.ttf")
-#             btn.bind(on_release=lambda btn: self.select_option(btn.text, dropdown))
-#             dropdown.add_widget(btn)
-
-#         main_button = Button(text=reshape_text('اختر بحرا'), size_hint=(1, 0.1), font_name="Amiri-Regular.ttf")
-#         main_button.bind(on_release=dropdown.open)
-#         layout.add_widget(main_button)
-#         layout.add_widget(dropdown)
-
-#         back_button = Button(text=reshape_text('رجوع'), size_hint=(1, 0.2), font_name="Amiri-Regular.ttf")
-#         back_button.bind(on_press=lambda x: setattr(self.manager, 'current', 'main'))
-#         layout.add_widget(back_button)
-
-#         self.add_widget(layout)
-
-#     def select_option(self, option, dropdown):
-#         # Update main button text to show selected option
-#         dropdown.parent.children[1].text = reshape_text(option)
-#         dropdown.dismiss()
-
-
-
-
 class ArabicApp(App):
     def build(self):
-        sm = ScreenManager()
+        Window.title = "Al Farhidi"
 
+        sm = ScreenManager()
         sm.add_widget(MainPage(name='main'))
         sm.add_widget(Page1(name='page1'))
         sm.add_widget(Page2(name='page2'))

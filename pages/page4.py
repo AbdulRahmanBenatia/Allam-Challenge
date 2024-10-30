@@ -4,13 +4,14 @@ from utils import reshape_text
 from kivy.uix.button import Button
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.label import Label
-from kivy.uix.screenmanager import  Screen
-from ibm_API import get_reponse
+from kivy.uix.screenmanager import Screen
+from ibm_API import get_response
 from kivy.uix.dropdown import DropDown
+from kivy.uix.floatlayout import FloatLayout
+from kivy.uix.scrollview import ScrollView  # Import ScrollView
+from kivy.clock import Clock
 
-
-
-BUHOOR = [ #These are only 14
+BUHOOR = [
     "السريع",
     "الكامل",
     "المتقارب",
@@ -25,61 +26,104 @@ BUHOOR = [ #These are only 14
     "الوافر",
     "الهزج",
     "الرجز",
-    
-    # Adding the rest 2 meters, Note: Not in Metrec Dataset
     "المقتضب",
     "الخبب",
 ]
 
-
 class Page4(Screen):
     def __init__(self, **kwargs):
         super(Page4, self).__init__(**kwargs)
-        layout = BoxLayout(orientation='vertical', padding=10, spacing=10)
+        main_layout = FloatLayout()
+        font_path = "Amiri-Regular.ttf"  # Arabic font path
 
-        dropdown = DropDown()
+        # Back button with custom icon
+        back_button = Button(
+            size_hint=(None, None),
+            size=(50, 50),
+            background_normal='/home/ozeiri/repos/Allam-Challenge/icons/back.png',
+            background_down='/home/ozeiri/repos/Allam-Challenge/icons/back.png',
+            pos_hint={'x': 0.02, 'top': 0.98}
+        )
+        back_button.bind(on_press=lambda x: setattr(self.manager, 'current', 'main'))
+        main_layout.add_widget(back_button)
 
         # Load the responses from the JSON file
         with open('buhur_responses_reshaped.json', 'r', encoding='utf-8') as json_file:
             self.buhur_responses = json.load(json_file)
 
-        # Arabic options for the dropdown
-        options = BUHOOR
-        # Add options to dropdown
-        for option in options:
-            btn = Button(text=reshape_text(option), size_hint_y=None, height=44, font_name="Amiri-Regular.ttf")
+        # Dropdown setup
+        dropdown = DropDown()
+        for option in BUHOOR:
+            option_layout = BoxLayout(size_hint_y=None, height=50, padding=(10, 0))
+            btn = Button(
+                text=reshape_text(option),
+                size_hint=(None, 1),
+                width=150,
+                font_name=font_path
+            )
             btn.bind(on_release=lambda btn: self.select_option(btn.text, dropdown))
-            dropdown.add_widget(btn)
+            option_layout.add_widget(btn)
+            dropdown.add_widget(option_layout)
 
-        self.main_button = Button(text=reshape_text('اختر بحرا'), size_hint=(1, 0.1), font_name="Amiri-Regular.ttf")
+        # Main button to open dropdown at the bottom
+        self.main_button = Button(
+            text=reshape_text('اختر بحرا'),
+            font_size='24sp',
+            size_hint=(0.8, 0.1),
+            pos_hint={'center_x': 0.5, 'y': 0.1},
+            font_name=font_path
+        )
         self.main_button.bind(on_release=dropdown.open)
-        layout.add_widget(self.main_button)
-        layout.add_widget(dropdown)
+        main_layout.add_widget(self.main_button)
 
-        self.response_label = Label(text="", size_hint=(1, 0.6), font_name="Amiri-Regular.ttf")
-        layout.add_widget(self.response_label)
+        # Create a ScrollView to hold the response label
+        scroll_view = ScrollView(
+            size_hint=(0.8, 0.6),  # Define height relative to the parent layout
+            pos_hint={'center_x': 0.5, 'center_y': 0.5}
+        )
 
-        back_button = Button(text=reshape_text('رجوع'), size_hint=(1, 0.2), font_name="Amiri-Regular.ttf")
-        back_button.bind(on_press=lambda x: setattr(self.manager, 'current', 'main'))
-        layout.add_widget(back_button)
+        # Response label with animation and constrained text
+        self.response_label = Label(
+            text="",
+            font_size='24sp',
+            size_hint_y=None,  # Allow height to adjust based on content
+            halign='center',
+            valign='top',
+            font_name=font_path,
+            text_size=(self.width * 0.75, None)  # Adjusted width for 4-5 words per line
+        )
+        self.response_label.bind(texture_size=self.response_label.setter('size'))  # Auto-size the label
 
-        self.add_widget(layout)
+        scroll_view.add_widget(self.response_label)  # Add label to ScrollView
+        main_layout.add_widget(scroll_view)  # Add ScrollView to main layout
+
+        self.add_widget(main_layout)
 
     def select_option(self, option, dropdown):
-        # Update main button text to show selected option
+        # Update main button text and display the corresponding response
         self.main_button.text = option
         dropdown.dismiss()
 
-        # Fetch the corresponding response from the loaded JSON file
-        option_key = option.strip()  # Strip any extra spaces or formatting if needed
-        print(len(reshape_text(option_key)))
-        print(len(list(self.buhur_responses.keys())[0]))
-        print(option_key)
-        print(list(self.buhur_responses.keys())[0])
+        # Fetch the response from the loaded JSON file
+        option_key = option.strip()
         if option_key in self.buhur_responses:
             response = self.buhur_responses[option_key]
         else:
             response = "No explanation available."
 
-        # Update the label with the response
-        self.response_label.text = reshape_text(response)
+        # Start the text animation
+        self.animate_text(reshape_text(response))
+
+    def animate_text(self, full_text):
+        self.response_label.text = ''  # Start with an empty label
+        self.index = 0
+
+        def update_text(dt):
+            if self.index < len(full_text):
+                self.response_label.text += full_text[self.index]
+                self.index += 1
+            else:
+                return False  # Stop the scheduled event once text is complete
+
+        # Schedule the text update every 0.1 seconds
+        Clock.schedule_interval(update_text, 0.1)

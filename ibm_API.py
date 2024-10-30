@@ -26,7 +26,7 @@ MODEL = Model(
     project_id=PROJECT_ID
 )
 
-def get_reponse(prompt):
+def get_response(prompt):
     res = MODEL.generate_text(prompt=prompt)
     
     return res
