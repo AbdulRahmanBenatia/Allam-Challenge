@@ -1,6 +1,7 @@
 from ibm_watsonx_ai.foundation_models import Model
 import arabic_reshaper
 from bidi.algorithm import get_display
+
 credentials = {
     "url": "https://eu-de.ml.cloud.ibm.com",
     "apikey":"onhPojH5r-y97tpISLwazW5w98J8iPL3pDkGWbvMtngl"
