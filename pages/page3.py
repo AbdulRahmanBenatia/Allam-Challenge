@@ -103,6 +103,6 @@ class Page3(Screen):
         {self.full_verse}
         """
         print("PRESSED")
-        response = get_reponse(prompt=prompt)
+        response = get_response(prompt=prompt)
         print(response)
         self.label.text = reshape_text(response)

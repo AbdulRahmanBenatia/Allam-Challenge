@@ -99,6 +99,6 @@ class Page1(Screen):
         فقط البحر.
         """
         print("PRESSED")
-        response = get_reponse(prompt=prompt)
+        response = get_response(prompt=prompt)
         print(response)
         self.label.text = reshape_text(response)

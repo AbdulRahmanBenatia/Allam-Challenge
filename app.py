@@ -10,6 +10,9 @@ from pages.page1 import Page1
 from pages.page2 import Page2
 from pages.page3 import Page3
 from pages.page4 import Page4
+from kivy.uix.floatlayout import FloatLayout
+from kivy.uix.image import Image
+from kivy.uix.label import Label
 
 BUHOOR = [ 
     "السريع",
@@ -33,22 +36,47 @@ BUHOOR = [
 class MainPage(Screen):
     def __init__(self, **kwargs):
         super(MainPage, self).__init__(**kwargs)
-        self.layout = BoxLayout(orientation='vertical', padding=20, spacing=15)
+        # self.layout = BoxLayout(orientation='vertical', padding=20, spacing=15)
+        self.layout = FloatLayout()
         font_path = "Amiri-Regular.ttf"  
 
+        background = Image(source='icons/Arabic_Letters.jpg', allow_stretch=True, keep_ratio=False, opacity = 0.1,
+                           size_hint=(1, 1), pos_hint={'center_x': 0.5, 'center_y': 0.5})
+        self.layout.add_widget(background, index = 0)
+        
+        # # Title Label
+        # self.title_label = Label(text='', font_size='32sp', size_hint=(1, 0.2), pos_hint={'center_x': 0.5 , 'center_y': 0.95},
+        #                          halign='center', valign='middle', font_name=font_path)
+        # self.title_label.bind(size=self.title_label.setter('text_size'))
+        # self.layout.add_widget(self.title_label)
+
+        # # Define buttons with reshaped text and initially set opacity to 0
+        # self.buttons = [
+        #     Button(text=reshape_text("تحديد البحر الشعري"), font_size='24sp', size_hint=(1, 0.2), font_name=font_path, opacity=0, pos_hint={'center_x': 0.5 , 'center_y': 0.8},),
+        #     Button(text=reshape_text("إنشاء أبيات جديدة"), font_size='24sp', size_hint=(1, 0.2), font_name=font_path, opacity=0,  pos_hint={'center_x': 0.5 , 'center_y': 0.55},),
+        #     Button(text=reshape_text("شرح الأبيات"), font_size='24sp', size_hint=(1, 0.2), font_name=font_path, opacity=0, pos_hint={'center_x': 0.5 , 'center_y': 0.3},),
+        #     Button(text=reshape_text("دراسة البحور"), font_size='24sp', size_hint=(1, 0.2), font_name=font_path, opacity=0, pos_hint={'center_x': 0.5 , 'center_y': 0.05},),
+        # ]
+        
         # Title Label
-        self.title_label = Label(text='', font_size='32sp', size_hint=(1, 0.2),
-                                 halign='center', valign='middle', font_name=font_path)
+        self.title_label = Label(text='', font_size='32sp', size_hint=(1, 0.15), 
+                                pos_hint={'center_x': 0.5 , 'center_y': 0.92},
+                                halign='center', valign='middle', font_name=font_path)
         self.title_label.bind(size=self.title_label.setter('text_size'))
         self.layout.add_widget(self.title_label)
 
         # Define buttons with reshaped text and initially set opacity to 0
         self.buttons = [
-            Button(text=reshape_text("تحديد البحر الشعري"), font_size='24sp', size_hint=(1, 0.2), font_name=font_path, opacity=0),
-            Button(text=reshape_text("إنشاء أبيات جديدة"), font_size='24sp', size_hint=(1, 0.2), font_name=font_path, opacity=0),
-            Button(text=reshape_text("شرح الأبيات"), font_size='24sp', size_hint=(1, 0.2), font_name=font_path, opacity=0),
-            Button(text=reshape_text("دراسة البحور"), font_size='24sp', size_hint=(1, 0.2), font_name=font_path, opacity=0),
+            Button(text=reshape_text("تحديد البحر الشعري"), font_size='24sp', size_hint=(0.8, 0.15),
+                font_name=font_path, opacity=0, pos_hint={'center_x': 0.5 , 'center_y': 0.75}),
+            Button(text=reshape_text("إنشاء أبيات جديدة"), font_size='24sp', size_hint=(0.8, 0.15),
+                font_name=font_path, opacity=0, pos_hint={'center_x': 0.5 , 'center_y': 0.55}),
+            Button(text=reshape_text("شرح الأبيات"), font_size='24sp', size_hint=(0.8, 0.15),
+                font_name=font_path, opacity=0, pos_hint={'center_x': 0.5 , 'center_y': 0.35}),
+            Button(text=reshape_text("دراسة البحور"), font_size='24sp', size_hint=(0.8, 0.15),
+                font_name=font_path, opacity=0, pos_hint={'center_x': 0.5 , 'center_y': 0.15}),
         ]
+
         
         # Bind each button to its corresponding function
         self.buttons[0].bind(on_press=self.go_to_page1)
@@ -64,8 +92,10 @@ class MainPage(Screen):
         self.add_widget(self.layout)
 
         # Animate the title and then the buttons
-        self.animate_text(reshape_text("الفرهيدي"))  # Start the text animation
+        self.animate_text(reshape_text("علام الشعر"))  # Start the text animation
         Clock.schedule_once(self.animate_buttons, 1)  # Delay the button animation slightly
+        
+
 
     def animate_text(self, full_text):
         self.title_label.text = ''  # Start with an empty label
@@ -101,7 +131,7 @@ class MainPage(Screen):
 
 class ArabicApp(App):
     def build(self):
-        Window.title = "Al Farhidi"
+        Window.title = "Al Farahidi"
 
         sm = ScreenManager()
         sm.add_widget(MainPage(name='main'))
