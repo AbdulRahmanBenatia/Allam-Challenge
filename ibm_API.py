@@ -42,7 +42,7 @@ if __name__ == "__main__":
     اشرح البيت في سطر واحد:
     قفا نبك من ذكرى حبيب ومنزل .. بسقط اللوى بين الدخول فحومل
     """
-    print(reshape_text(get_reponse(prompt)))
+    print(reshape_text(get_response(prompt)))
 
 
 
