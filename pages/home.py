@@ -28,7 +28,7 @@ def load_home_page(page: ft.Page, navigate_to):
     
     main_column = ft.Column(
         alignment=ft.MainAxisAlignment.CENTER,
-        horizontal_alignment=ft.CrossAxisAlignment.CENTER,
+        horizontal_alignment=ft.CrossAxisAlignment.STRETCH,
         spacing=20,
         expand=True
     )
