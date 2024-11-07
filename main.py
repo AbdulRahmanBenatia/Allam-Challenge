@@ -5,6 +5,7 @@ from pages.generation_page import load_page2
 from pages.explanation_page import load_page3
 from pages.chat_page import load_page4
 from pages.meters_page import load_page5
+from pages.topic_based_page import load_page6
 
 def main(page: ft.Page):
     page.title = "تطبيق عربي بسيط"
@@ -30,6 +31,8 @@ def main(page: ft.Page):
             load_page4(page, navigate_to)
         elif page_name == "الصفحة الخامسة":
             load_page5(page, navigate_to)
+        else:
+            load_page6(page, navigate_to)
 
     # Load the main page on start
     navigate_to("الصفحة الرئيسية")

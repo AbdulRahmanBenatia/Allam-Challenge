@@ -42,6 +42,8 @@ def load_home_page(page: ft.Page, navigate_to):
         ft.ElevatedButton("شرح الأبيات", on_click=lambda _: navigate_to("الصفحة الثالثة"), width=300),
         ft.ElevatedButton("دراسة البحور", on_click=lambda _: navigate_to("الصفحة الخامسة"), width=300),
         ft.ElevatedButton("اسأل علَّام", on_click=lambda _: navigate_to("الصفحة الرابعة"), width=300),
+        ft.ElevatedButton("تغنى بموضوعك", on_click=lambda _: navigate_to("الصفحة السادسة"), width=300),
+
         ])
 
     # main_container = ft.Stack(
