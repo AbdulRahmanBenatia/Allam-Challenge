@@ -2,6 +2,12 @@ from ibm_watsonx_ai.foundation_models import Model
 import arabic_reshaper
 from bidi.algorithm import get_display
 
+# Handling Arabic Text
+def reshape_text(text):
+    reshaped_text = arabic_reshaper.reshape(text)
+    bidi_text = get_display(reshaped_text)
+    return bidi_text
+
 credentials = {
     "url": "https://eu-de.ml.cloud.ibm.com",
     "apikey":"onhPojH5r-y97tpISLwazW5w98J8iPL3pDkGWbvMtngl"
@@ -29,20 +35,27 @@ MODEL = Model(
 def get_response(prompt):
     res = MODEL.generate_text(prompt=prompt)
     
+    print("RESPONSE IN API FUNCTION: ")
+    print(res)
+    print("Reshaped RESPONSE IN API FUNCTION: ")
+    print(reshape_text(res))
+    
     return res
 
-# Handling Arabic Text
-def reshape_text(text):
-    reshaped_text = arabic_reshaper.reshape(text)
-    bidi_text = get_display(reshaped_text)
-    return bidi_text
-
 if __name__ == "__main__":
-    prompt = """
-    اشرح البيت في سطر واحد:
-    قفا نبك من ذكرى حبيب ومنزل .. بسقط اللوى بين الدخول فحومل
+    # prompt = """
+    # اشرح البيت في سطر واحد:
+    # قفا نبك من ذكرى حبيب ومنزل .. بسقط اللوى بين الدخول فحومل
+    # """
+    # print(reshape_text(get_reponse(prompt)))
+    
+    prompt =f"""
+            اشرح هذا البيت شرحا موجزا جدا:
+            {reshape_text('ﺰﻨﻣﻭ ﺐﻴﺒﺣ ﻯﺮﻛﺫ ﻦﻣ ﻚﺒﻧ ﺎﻔﻗ')}
     """
-    print(reshape_text(get_response(prompt)))
+    print(prompt)
+    # print(reshape_text(get_reponse(prompt)))
+    
 
 
 
