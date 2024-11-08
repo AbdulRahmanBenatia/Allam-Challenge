@@ -1,10 +1,12 @@
 import flet as ft
 from ibm_API import get_response
+from utils import Text, SMALL_BTN_SIZE
+
 
 def load_page6(page: ft.Page, navigate_to):
     page.clean()
 
-    back_button = ft.ElevatedButton("رجوع", on_click=lambda _: navigate_to("الصفحة الرئيسية"), width=150)
+    back_button = ft.ElevatedButton(content=Text("رجوع", size=SMALL_BTN_SIZE), on_click=lambda _: navigate_to("الصفحة الرئيسية"), width=150)
     output_label = ft.Text("", size=20, text_align=ft.TextAlign.CENTER)
 
     def on_submit(e):
@@ -34,7 +36,7 @@ def load_page6(page: ft.Page, navigate_to):
     content_column.controls.extend([
         ft.Text("ادخل موضوعا و علام سينشئ ابياتا عنه", size=30, text_align=ft.TextAlign.CENTER,font_family="Ruqaa"),
         text_box,
-        ft.ElevatedButton("إرسال", on_click=on_submit),
+        ft.ElevatedButton(content=Text("إرسال", size=SMALL_BTN_SIZE), on_click=on_submit),
         output_label,
         back_button
     ])

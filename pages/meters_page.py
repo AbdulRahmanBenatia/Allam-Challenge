@@ -1,3 +1,8 @@
+
+import flet as ft
+from utils import Text, SMALL_BTN_SIZE
+
+
 BUHOOR = [
     "السريع",
     "الكامل",
@@ -17,11 +22,11 @@ BUHOOR = [
     "المقتضب",
     "الخبب",
 ]
-import flet as ft
+
 def load_page5(page: ft.Page, navigate_to):
     page.clean()
 
-    back_button = ft.ElevatedButton("رجوع", on_click=lambda _: navigate_to("الصفحة الرئيسية"), width=150)
+    back_button = ft.ElevatedButton(content=Text("رجوع", size=SMALL_BTN_SIZE), on_click=lambda _: navigate_to("الصفحة الرئيسية"), width=150)
 
     # Create a dropdown with 16 options
     options = [ft.dropdown.Option(bahr) for bahr in BUHOOR]

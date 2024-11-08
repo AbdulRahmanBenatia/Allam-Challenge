@@ -1,5 +1,5 @@
 import flet as ft
-
+from utils import Text, LARGE_BTN_SIZE
 
 def load_home_page(page: ft.Page, navigate_to):
     page.clean()
@@ -33,16 +33,17 @@ def load_home_page(page: ft.Page, navigate_to):
         expand=True
     )
 
+
     
     main_column.controls.extend([
-        ft.Text('عَلَّامُ الشِّعْرِ', size=40, text_align=ft.TextAlign.CENTER,font_family='Thuluth'),
+        ft.Text('عَلَّامُ الشِّعْرِ', size=50, text_align=ft.TextAlign.CENTER,font_family='Thuluth'),
         # buttons
-        ft.ElevatedButton("تحديد البحر الشعري", on_click=lambda _: navigate_to("الصفحة الأولى"),   width=300),
-        ft.ElevatedButton("إنشاء أبيات جديدة", on_click=lambda _: navigate_to("الصفحة الثانية"), width=300),
-        ft.ElevatedButton("شرح الأبيات", on_click=lambda _: navigate_to("الصفحة الثالثة"), width=300),
-        ft.ElevatedButton("دراسة البحور", on_click=lambda _: navigate_to("الصفحة الخامسة"), width=300),
-        ft.ElevatedButton("اسأل علَّام", on_click=lambda _: navigate_to("الصفحة الرابعة"), width=300),
-        ft.ElevatedButton("تغنى بموضوعك", on_click=lambda _: navigate_to("الصفحة السادسة"), width=300),
+        ft.ElevatedButton(content=Text("تحديد البحر الشعري", size=LARGE_BTN_SIZE), on_click=lambda _: navigate_to("الصفحة الأولى"),  width=300),
+        ft.ElevatedButton(content=Text("إنشاء أبيات جديدة", size=LARGE_BTN_SIZE), on_click=lambda _: navigate_to("الصفحة الثانية"), width=300),
+        ft.ElevatedButton(content=Text("شرح الأبيات", size=LARGE_BTN_SIZE), on_click=lambda _: navigate_to("الصفحة الثالثة"), width=300),
+        ft.ElevatedButton(content=Text("دراسة البحور", size=LARGE_BTN_SIZE), on_click=lambda _: navigate_to("الصفحة الخامسة"), width=300),
+        ft.ElevatedButton(content=Text("اسأل علَّام", size=LARGE_BTN_SIZE), on_click=lambda _: navigate_to("الصفحة الرابعة"), width=300),
+        ft.ElevatedButton(content=Text("تغنى بموضوعك", size=LARGE_BTN_SIZE), on_click=lambda _: navigate_to("الصفحة السادسة"), width=300),
 
         ])
 
