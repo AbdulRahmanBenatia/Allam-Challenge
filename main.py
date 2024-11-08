@@ -29,8 +29,6 @@ def main(page: ft.Page):
             load_page3(page, navigate_to)
         elif page_name == "الصفحة الرابعة":
             load_page4(page, navigate_to)
-        elif page_name == "الصفحة الخامسة":
-            load_page5(page, navigate_to)
         else:
             load_page6(page, navigate_to)
 

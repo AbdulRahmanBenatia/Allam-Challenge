@@ -9,10 +9,12 @@ def load_page4(page: ft.Page, navigate_to):
     output_label = ft.Text("", size=20, text_align=ft.TextAlign.CENTER)
 
     def on_submit(e):
-        prompt = text_box.value
-        print("PRESSED")
+        prompt = f"""
+                انت شاعر فصيح خبير باداب الشعر و قواعده اجب عن السؤال التالي:
+                {text_box.value}
+                """
+        
         response = get_response(prompt=prompt)
-        print(response)
         output_label.value = response
         page.update()
         page.update()
