@@ -43,7 +43,7 @@ def load_home_page(page: ft.Page, navigate_to):
         ft.ElevatedButton(content=Text("شرح الأبيات", size=LARGE_BTN_SIZE), on_click=lambda _: navigate_to("الصفحة الثالثة"), width=300),
         ft.ElevatedButton(content=Text("دراسة البحور", size=LARGE_BTN_SIZE), on_click=lambda _: navigate_to("الصفحة الخامسة"), width=300),
         ft.ElevatedButton(content=Text("اسأل علَّام", size=LARGE_BTN_SIZE), on_click=lambda _: navigate_to("الصفحة الرابعة"), width=300),
-        ft.ElevatedButton(content=Text("تغنى بموضوعك", size=LARGE_BTN_SIZE), on_click=lambda _: navigate_to("الصفحة السادسة"), width=300),
+        ft.ElevatedButton(content=Text("تغن بموضوعك", size=LARGE_BTN_SIZE), on_click=lambda _: navigate_to("الصفحة السادسة"), width=300),
 
         ])
 
