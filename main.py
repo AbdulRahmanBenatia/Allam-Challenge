@@ -8,7 +8,7 @@ from pages.meters_page import load_page5
 from pages.topic_based_page import load_page6
 
 def main(page: ft.Page):
-    page.title = "تطبيق عربي بسيط"
+    page.title = "تطبيق علام الشعر"
     page.theme_mode = "light"
     page.fonts = {
         "Amiri": "fonts/Amiri-Regular.ttf"  # Ensure this path is correct

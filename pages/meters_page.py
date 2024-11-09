@@ -1,6 +1,6 @@
 
 import flet as ft
-from utils import Text, SMALL_BTN_SIZE, BACK_BTN_STYLE
+from utils import Text, SMALL_BTN_SIZE, BACK_BTN_STYLE, SEND_BTN_STYLE
 
 
 BUHOOR = [
