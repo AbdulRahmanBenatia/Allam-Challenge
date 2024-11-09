@@ -12,13 +12,10 @@ def load_home_page(page: ft.Page, navigate_to):
         "Thuluth": "fonts/AM_Thulth_Regular_0.1.otf",
     }
     page.theme = ft.Theme(font_family = "Amiri")
-    # page.bgcolor = "lightblue"
 
     pattern_overlay = ft.Container(
-        # content=None, 
         width=page.width,
         height=page.height,
-        # image_src="pattern.png", 
         image_src="Backgrounds/Bckg1_1.png",
         image_repeat=ft.ImageRepeat.REPEAT,
         alignment=ft.alignment.center,

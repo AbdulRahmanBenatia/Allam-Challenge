@@ -13,7 +13,7 @@ def load_page4(page: ft.Page, navigate_to):
         width=page.width,
         height=page.height,
         # image_src="pattern.png", 
-        image_src="Backgrounds/bckg_pages.png",
+        image_src="Backgrounds/Bckg_pages.png",
         image_repeat=ft.ImageRepeat.REPEAT,
         alignment=ft.alignment.center,
         # opacity=0.5
@@ -34,7 +34,11 @@ def load_page4(page: ft.Page, navigate_to):
         label="اكتب سؤالك هنا",
         text_align=ft.TextAlign.RIGHT,
         on_submit=on_submit,
-        multiline=True
+        multiline=True,
+         filled=True,
+        bgcolor="#3E4651",
+        border_radius=8,
+        opacity=0.7
     )
 
     content_column = ft.Column(
