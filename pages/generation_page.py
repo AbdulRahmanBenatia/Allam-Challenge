@@ -1,6 +1,6 @@
 import flet as ft
 from ibm_API import get_response
-from utils import Text, SMALL_BTN_SIZE, BACK_BTN_STYLE
+from utils import Text, SMALL_BTN_SIZE, BACK_BTN_STYLE, SEND_BTN_STYLE
 
 def load_page2(page: ft.Page, navigate_to):
     page.clean()
@@ -34,6 +34,17 @@ def load_page2(page: ft.Page, navigate_to):
         multiline=True,
     )
 
+    pattern_overlay = ft.Container(
+        # content=None, 
+        width=page.width,
+        height=page.height,
+        # image_src="pattern.png", 
+        image_src="Backgrounds/bckg_pages.png",
+        image_repeat=ft.ImageRepeat.REPEAT,
+        alignment=ft.alignment.center,
+        # opacity=0.5
+    )
+    
     content_column = ft.Column(
         alignment=ft.MainAxisAlignment.CENTER,
         horizontal_alignment=ft.CrossAxisAlignment.CENTER,
@@ -44,9 +55,14 @@ def load_page2(page: ft.Page, navigate_to):
     content_column.controls.extend([
         ft.Text("أدخِل بيتًا أو بيتين وسيكمل علام الأبيات من إبداعه", size=30, text_align=ft.TextAlign.CENTER,font_family='Ruqaa'),
         text_box,
-        ft.ElevatedButton(content=Text("إرسال", size=SMALL_BTN_SIZE), on_click=on_submit, width=150),
+        ft.ElevatedButton(content=Text("إرسال", size=SMALL_BTN_SIZE), on_click=on_submit, width=150, style = SEND_BTN_STYLE),
         output_label,
         back_button
     ])
 
-    page.add(content_column)
+    main_container = ft.Stack(
+    controls=[pattern_overlay, content_column],
+    width=page.width,
+    height=page.height,
+    )  
+    page.add(main_container)
