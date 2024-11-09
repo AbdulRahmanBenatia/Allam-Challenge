@@ -20,7 +20,7 @@ MODEL_ID = "sdaia/allam-1-13b-instruct"
 
 parameters = {
     "decoding_method":"greedy",
-    "max_new_tokens":70,
+    "max_new_tokens":200,
     "repetition_penalty":1.05
 }
 
