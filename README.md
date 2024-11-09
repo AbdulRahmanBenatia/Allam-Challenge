@@ -1,4 +1,4 @@
-# Allam Challenge - Poetry App
+# Allam Challenge - ALLAM Poetry App
 
 Welcome to the **Allam Challenge**, Arabic poetry app based on ALLAM LLM, built to enhance the use of Arabic language in AI, especially LLMs, and serve as a place for Arabic poetry enthusiasts where they can find most of their needs.
 
