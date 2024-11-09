@@ -1,5 +1,6 @@
 import flet as ft
 from API.ibm import get_response
+from API.deem_gen import deem_get_response_gen
 from utils import Text, SMALL_BTN_SIZE, BACK_BTN_STYLE, SEND_BTN_STYLE, TEXT_INPUT_STYLE
 
 def load_page2(page: ft.Page, navigate_to):
@@ -21,7 +22,7 @@ def load_page2(page: ft.Page, navigate_to):
         """
         
         print("PRESSED")
-        response = get_response(prompt=prompt)
+        response = deem_get_response_gen(prompt=prompt)
         print(response)
         output_label.value = response
         print('Done Generating')

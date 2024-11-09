@@ -1,0 +1,4 @@
+flet
+ibm_watsonx_ai
+python-bidi
+arabic_reshaper

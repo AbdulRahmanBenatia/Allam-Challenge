@@ -21,6 +21,6 @@ deployment_inference = ModelInference(
 
 
 
-def deem_get_response(prompt):
+def deem_get_response_gen(prompt):
     generated_response = deployment_inference.generate(prompt=prompt)
     return generated_response['results'][0]['generated_text']

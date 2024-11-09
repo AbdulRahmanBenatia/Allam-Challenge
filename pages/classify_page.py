@@ -1,5 +1,6 @@
 import flet as ft
 from API.ibm import get_response
+from API.deem_cls_ import deem_get_response_cls
 from utils import Text, SMALL_BTN_SIZE, BACK_BTN_STYLE, SEND_BTN_STYLE
 
 def load_page1(page: ft.Page, navigate_to):
@@ -27,7 +28,7 @@ def load_page1(page: ft.Page, navigate_to):
         الطويل
         """
 
-        response = get_response(prompt=prompt)
+        response = deem_get_response_cls(prompt=prompt)
         output_label.value = response
         page.update()
 
