@@ -1,10 +1,13 @@
 # Allam Challenge - Poetry App
 
-Welcome to the **Allam Challenge**, a simple poetry app built to inspire creativity and explore the beauty of poetry. This app is designed to generate and display poems based on various inputs and preferences.
+Welcome to the **Allam Challenge**, Arabic poetry app based on ALLAM LLM, built to enhance the use of Arabic language in AI, especially LLMs, and serve as a place for Arabic poetry enthusiasts where they can find most of their needs.
 
 ## Features
+- Classify Arabic Poetry Meters.
 - Generate poetry based on user input.
 - Customizable poem structure and themes.
+- Explain poem verses in a simple language.
+- Directly prompt the LLM with your own questions about Arabic Poetry.
 - Easy to use interface.
 
 ## Installation
