@@ -14,9 +14,7 @@ Welcome to the **Allam Challenge**, Arabic poetry app based on ALLAM LLM, built 
 
 To run the **Allam Challenge** Poetry App, follow these steps:
 
-### Prerequisites
-- Python 3.6 or higher
-- pip (Python package manager)
+
 
 ### Steps
 
@@ -25,3 +23,13 @@ To run the **Allam Challenge** Poetry App, follow these steps:
    ```bash
    git clone https://github.com/KareemElozeiri/Allam-Challenge
    ```
+2. Install dependencies:
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+3. Run in cmd/terminal:
+   ```bash
+      python main.py
+   ```
+   
