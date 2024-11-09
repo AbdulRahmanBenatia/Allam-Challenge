@@ -16,7 +16,7 @@ def load_home_page(page: ft.Page, navigate_to):
     pattern_overlay = ft.Container(
         width=page.width,
         height=page.height,
-        image_src="Backgrounds/Bckg1_1.png",
+        image_src="assets/Bckg1_1.png",
         image_repeat=ft.ImageRepeat.REPEAT,
         alignment=ft.alignment.center,
         opacity=0.5

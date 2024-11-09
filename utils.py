@@ -18,20 +18,22 @@ SEND_BTN_STYLE = ft.ButtonStyle(   bgcolor={
             },
             )
 
-BACK_BTN_STYLE = ft.ButtonStyle(   bgcolor={
-                "": "#8B0000",         # Default color (dark red)
-                "hovered": "#B22222"   # Lighter red on hover
+BACK_BTN_STYLE = ft.ButtonStyle(bgcolor={
+                "": "#8B0000",         
+                "hovered": "#B22222"   
                 
             },
             )
 
+TEXT_INPUT_STYLE = ft.ButtonStyle(bgcolor={
+                "": "#3E4651",     
+            })
 
-TEXT_INPUT_STYLE = ft.ButtonStyle(   bgcolor={
-                "": "#3E4651",   
-                
-            },
-            )
 
+
+
+def Text(text, size=26, font_family="Amiri"):
+    return ft.Text(text, size=size, font_family=font_family,color="#EF79C2")
 
 # Handling Arabic Text
 def reshape_text(text):
@@ -40,7 +42,3 @@ def reshape_text(text):
     return bidi_text
 
 
-
-
-def Text(text, size=26, font_family="Amiri"):
-    return ft.Text(text, size=size, font_family=font_family,color="#EF79C2")

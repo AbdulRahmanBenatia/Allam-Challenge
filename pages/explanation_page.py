@@ -1,5 +1,5 @@
 import flet as ft
-from ibm_API import get_response
+from API.ibm import get_response
 from utils import Text, SMALL_BTN_SIZE, BACK_BTN_STYLE, SEND_BTN_STYLE
 
 def load_page3(page: ft.Page, navigate_to):
@@ -10,11 +10,9 @@ def load_page3(page: ft.Page, navigate_to):
 
 
     pattern_overlay = ft.Container(
-        # content=None, 
         width=page.width,
         height=page.height,
-        # image_src="pattern.png", 
-        image_src="Backgrounds/Bckg_pages.png",
+        image_src="assets/Bckg_pages.png",
         image_repeat=ft.ImageRepeat.REPEAT,
         alignment=ft.alignment.center,
 
@@ -30,10 +28,8 @@ def load_page3(page: ft.Page, navigate_to):
         جوابك: 
         احترم معلمك وقدره، فإن مكانته شبيهة بمكانة الرسل لأنه يحمل رسالة العلم.
         """
-        print("PRESSED")
+
         response = get_response(prompt=prompt)
-        print(response)
-        # output_label.value = f"لقد أدخلت: {text_box.value}"
         output_label.value = response
         page.update()
 

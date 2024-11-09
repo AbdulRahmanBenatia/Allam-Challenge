@@ -1,5 +1,5 @@
 import flet as ft
-from ibm_API import get_response
+from API.ibm import get_response
 from utils import Text, SMALL_BTN_SIZE, BACK_BTN_STYLE, SEND_BTN_STYLE, TEXT_INPUT_STYLE
 
 def load_page2(page: ft.Page, navigate_to):
@@ -12,17 +12,17 @@ def load_page2(page: ft.Page, navigate_to):
         prompt = f"""
         اكتب أبياتًا بعد هذا البيت:
         {text_box.value}
+        
+        مثال: 
+        يَــقُــولون لي أَعــرَضــتَ عَـمَّنـ تُـحـبُّهُ كَـذَبـتُـم وَلَكـن لَم يَكُن رائِقَ النَفسِ
+        جوابك: 
+        وَلَم يَــكُــن الإِعــراضُ مِـنّـي تَـعَـمُّداً وَهَل يُمكِنُ الإِعراضُ عَن غايَةِ الأُنسِ
+        وَلَكـن صَـرَفـتُ الطَـرفَ مِـن نُـور وَجهِهِ كَما تُصرَفُ الأَبصارُ عَن قُرصَةِ الشَمسِ
         """
-        # مثال: 
-        # يَــقُــولون لي أَعــرَضــتَ عَـمَّنـ تُـحـبُّهُ كَـذَبـتُـم وَلَكـن لَم يَكُن رائِقَ النَفسِ
-        # جوابك: 
-        # وَلَم يَــكُــن الإِعــراضُ مِـنّـي تَـعَـمُّداً وَهَل يُمكِنُ الإِعراضُ عَن غايَةِ الأُنسِ
-        # وَلَكـن صَـرَفـتُ الطَـرفَ مِـن نُـور وَجهِهِ كَما تُصرَفُ الأَبصارُ عَن قُرصَةِ الشَمسِ
         
         print("PRESSED")
         response = get_response(prompt=prompt)
         print(response)
-        # output_label.value = f"لقد أدخلت: {text_box.value}"ء
         output_label.value = response
         print('Done Generating')
         page.update()
@@ -39,14 +39,11 @@ def load_page2(page: ft.Page, navigate_to):
     )
 
     pattern_overlay = ft.Container(
-        # content=None, 
         width=page.width,
         height=page.height,
-        # image_src="pattern.png", 
-        image_src="Backgrounds/Bckg_pages.png",
+        image_src="assets/Bckg_pages.png",
         image_repeat=ft.ImageRepeat.REPEAT,
         alignment=ft.alignment.center,
-        # opacity=0.5
     )
     
     content_column = ft.Column(

@@ -1,5 +1,5 @@
 import flet as ft
-from ibm_API import get_response
+from API.ibm import get_response
 from utils import Text, SMALL_BTN_SIZE, BACK_BTN_STYLE, SEND_BTN_STYLE
 
 
@@ -10,14 +10,11 @@ def load_page6(page: ft.Page, navigate_to):
     output_label = ft.Text("", size=20, text_align=ft.TextAlign.CENTER)
     
     pattern_overlay = ft.Container(
-        # content=None, 
         width=page.width,
         height=page.height,
-        # image_src="pattern.png", 
-        image_src="Backgrounds/Bckg_pages.png",
+        image_src="assets/Bckg_pages.png",
         image_repeat=ft.ImageRepeat.REPEAT,
         alignment=ft.alignment.center,
-        # opacity=0.5
     )
 
     def on_submit(e):
