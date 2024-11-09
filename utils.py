@@ -25,6 +25,14 @@ BACK_BTN_STYLE = ft.ButtonStyle(   bgcolor={
             },
             )
 
+
+TEXT_INPUT_STYLE = ft.ButtonStyle(   bgcolor={
+                "": "#3E4651",   
+                
+            },
+            )
+
+
 # Handling Arabic Text
 def reshape_text(text):
     reshaped_text = arabic_reshaper.reshape(text)
